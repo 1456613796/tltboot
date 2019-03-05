@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gg.tlt.mapper.TestMapper">
+
+    <resultMap id="userMap" type="com.gg.tlt.model.User">
+        <id column="USERNAME" property="username" jdbcType="VARCHAR"/>
+        <id column="SEX" property="sex" jdbcType="INTEGER"/>
+        <id column="AGE" property="age" jdbcType="INTEGER"/>
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAllUsers" resultMap="userMap">
+        select * from user;
+    </select>
+    <select id="selectUserNameById" parameterType="String" resultType="String">
+        select `user`.USERNAME from `user` WHERE ID=#{id}
+    </select>
+
+    <insert id="insertUser" parameterType="com.gg.tlt.model.User">
+        INSERT INTO user(USERNAME,SEX,AGE,ID) VALUES(#{username},#{sex},#{age},#{id})
+    </insert>
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM `user` WHERE ID = #{id}
+    </delete>
+    <update id="updateUserById">
+        UPDATE user SET USERNAME = #{username},AGE = #{age},SEX = #{sex} WHERE ID = #{id}
+    </update>
+
+</mapper>
