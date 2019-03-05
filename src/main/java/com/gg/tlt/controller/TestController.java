@@ -20,7 +20,14 @@ public class TestController {
     TestService testService;
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public String main(Model model) {
+        List<User> users = testService.queryAllUsers();
+        model.addAttribute("user_list", users);
+        return "/index";
+    }
+
+    @RequestMapping("/index")
+    public String index(Model model){
         List<User> users = testService.queryAllUsers();
         model.addAttribute("user_list", users);
         return "/index";
