@@ -1,8 +1,7 @@
 package com.gg.tlt.controller;
 
+import com.gg.tlt.mapper.TestMapper;
 import com.gg.tlt.model.User;
-import com.gg.tlt.service.TestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,20 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 //@RestController("/")//等价于@responseBody
 public class TestController {
 
-    @Autowired
-    TestService testService;
+    @Resource
+    TestMapper testMapper;
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(Model model) {
-        List<User> users = testService.queryAllUsers();
+        List<User> users = testMapper.selectAllUsers();
         model.addAttribute("user_list", users);
-        return "/index";
+        return "index";
     }
 
     @RequestMapping("/addUser")
@@ -34,7 +34,7 @@ public class TestController {
                            @RequestParam("age") String age) {
         User user = new User(username, Integer.parseInt(sex), Integer.parseInt(age), id);
         try {
-            int result = testService.addUser(user);
+            int result = testMapper.insertUser(user);
             if (result == 0)
                 return 0;
             else if (result > 0)
@@ -52,7 +52,7 @@ public class TestController {
     public Integer deleteUserById(@RequestParam("id") String id) {
         System.out.println("删除用户:"+id);
         try {
-            int result = testService.removeById(id);
+            int result = testMapper.deleteById(id);
             if (result >= 0)
                 return result;
             else
@@ -73,7 +73,7 @@ public class TestController {
         System.out.println("编号为"+id+"请求用户信息变更");
 
         try{
-            int result = testService.modifyUser(username,Integer.parseInt(age),id,Integer.parseInt(sex));
+            int result = testMapper.updateUserById(username,Integer.parseInt(age),id,Integer.parseInt(sex));
             if(result>=0) {
                 System.out.println("变更成功");
                 return result;
@@ -90,6 +90,6 @@ public class TestController {
     @ResponseBody
     public String selectUserNameById(@PathVariable(value = "id") String id) {
 
-        return testService.selectUserNameById(id);
+        return testMapper.selectUserNameById(id);
     }
 }
