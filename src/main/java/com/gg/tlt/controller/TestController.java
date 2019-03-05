@@ -86,12 +86,12 @@ public class TestController {
         }
     }
 
-    @RequestMapping("/user/{id}")
-    @ResponseBody
-    public String selectUserNameById(@PathVariable(value = "id") String id) {
-
-        return testService.selectUserNameById(id);
-    }
+//    @RequestMapping("/user/{id}")
+//    @ResponseBody
+//    public String selectUserNameById(@PathVariable(value = "id") String id) {
+//
+//        return testService.selectUserNameById(id);
+//    }
 
 
 }
