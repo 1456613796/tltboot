@@ -11,6 +11,10 @@ public interface TestMapper {
     @Select("select * from user")
     public List<User> selectAllUsers();
 
+
+    @Select("select * from user where ID = #{id}")
+    public User selectUserById(@Param("id") String id);
+
     @Insert("INSERT INTO user(USERNAME,SEX,AGE,ID) VALUES(#{username},#{sex},#{age},#{id})")
     public Integer insertUser(User user);
 

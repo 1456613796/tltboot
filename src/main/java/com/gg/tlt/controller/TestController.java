@@ -50,7 +50,7 @@ public class TestController {
     @RequestMapping("/deleteUserById")
     @ResponseBody
     public Integer deleteUserById(@RequestParam("id") String id) {
-        System.out.println("删除用户:"+id);
+        System.out.println("删除用户:" + id);
         try {
             int result = testMapper.deleteById(id);
             if (result >= 0)
@@ -70,20 +70,28 @@ public class TestController {
                                  @RequestParam("age") String age,
                                  @RequestParam("id") String id) {
 
-        System.out.println("编号为"+id+"请求用户信息变更");
+        System.out.println("编号为" + id + "请求用户信息变更");
 
-        try{
-            int result = testMapper.updateUserById(username,Integer.parseInt(age),id,Integer.parseInt(sex));
-            if(result>=0) {
+        try {
+            int result = testMapper.updateUserById(username, Integer.parseInt(age), id, Integer.parseInt(sex));
+            if (result >= 0) {
                 System.out.println("变更成功");
                 return result;
-            }
-            else
+            } else
                 return -2;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return -2;
         }
+    }
+
+    @RequestMapping("/user_id/{id}")
+    @ResponseBody
+    public String selectUserById(@PathVariable(value = "id") String id) {
+
+        User user = testMapper.selectUserById(id);
+        System.out.println(user.getSex() + " " + user.getUsername());
+        return "success";
     }
 
     @RequestMapping("/user/{id}")

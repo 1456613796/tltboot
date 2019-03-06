@@ -22,6 +22,7 @@
                 <th style="text-align: center">删除</th>
                 <th style="text-align: center">修改</th>
             </tr>
+
             <tr th:each="user:${user_list}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
